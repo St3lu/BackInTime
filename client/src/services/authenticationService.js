@@ -1,7 +1,12 @@
 import Api from './Api'
 
 export default {
-    register (credentials) {
-        Api().post('register', credentials)
+    async register (credentials) {
+        try{
+            await Api().post('register', credentials)
+            return;
+        }catch(err){
+            return err.response.data.error
+        }
     }
 }

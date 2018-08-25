@@ -3,7 +3,7 @@
         <h1 class="heading-1"> Registration</h1>
         <form class="register__form">
             <div class="register__container">
-                <input name="full_name" type="text" placeholder="Full Name" class="register__input" v-model="credentials.full_name">
+                <input name="full_name" type="text" placeholder="Full Name" class="register__input" v-model="credentials.full_name" autocomplete="off">
                 <label for="full_name">Full Name</label>
             </div>
             <div class="register__container">
@@ -18,30 +18,40 @@
                 <input type="date" name="birth_date" class="register__input" placeholder="Birth Date" v-model="credentials.birth_date">
                 <label for="birth_date">Date Of Birth</label>
             </div>
-            <a class="register__btn" @click="sendCredentials">Register</a>
+            <div v-if="error" class="error" v-html="error"/>
+            <a  class="register__btn" @click="sendCredentials">Register</a>
         </form>
     </div>
 </template>
 <script>
-    import authenticationService from '../services/authenticationService';
+import authenticationService from '../services/authenticationService'
 
-    export default {
-        data() {
-            return {
-                credentials : {
-                    email : null,
-                    password: null,
-                    full_name: null,
-                    birth_date: null
-                }
-            }
-        },
-        methods : {
-            sendCredentials () {
-                authenticationService.register(this.credentials);
-            }
-        }
+export default {
+  data () {
+    return {
+      credentials: {
+        email: '',
+        password: '',
+        full_name: '',
+        birth_date: ''
+      },
+      error: null
     }
+  },
+  methods: {
+    async sendCredentials () {
+      try {
+        this.error = await authenticationService.register(this.credentials)
+        this.credentials.email = ''
+        this.credentials.password = ''
+        this.credentials.full_name = ''
+        this.credentials.birth_date = ''
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
+}
 </script>
 <style lang="scss" scoped>
 
@@ -70,14 +80,13 @@
             border-bottom: 1px solid grey;
             margin-bottom: 10px;
 
-
             &:focus{
                 outline: 0;
             }
         }
 
         &__btn{
-            margin-top: 30px;
+            margin-top: 50px;
             font-family: 'Cairo', sans-serif;
             background-color: transparent;
             border: 2px solid grey;
@@ -106,5 +115,14 @@
         font-family: 'Cairo', sans-serif;
         margin: 0;
         font-size: 60px;
+    }
+
+    .error {
+        background-color: rgb(255, 168, 168);
+        border: 2px solid rgb(114, 0, 0);
+        color: rgb(255, 0, 0);
+        padding: 5px 15px;
+        border-radius: 10px;
+        margin-bottom: 20px;
     }
 </style>
