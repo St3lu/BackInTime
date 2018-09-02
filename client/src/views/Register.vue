@@ -46,6 +46,7 @@ export default {
         this.credentials.password = ''
         this.credentials.full_name = ''
         this.credentials.birth_date = ''
+        this.error = null
       } catch (error) {
         console.log(error)
       }
@@ -63,6 +64,7 @@ export default {
         margin: 0;
         position: relative;
         padding: 0;
+        animation: mainIn 1s ease-in;
 
         &__form {
             position: absolute;
@@ -85,7 +87,7 @@ export default {
             }
         }
 
-        &__btn{
+&__btn{
             margin-top: 50px;
             font-family: 'Cairo', sans-serif;
             background-color: transparent;
@@ -97,14 +99,14 @@ export default {
             font-weight: 700;
             font-size: 16px;
             cursor: pointer;
-            transition: all .5s;
+    transition: all .5s;
             padding: 3px 30px;
 
             &:focus{
                 outline: none;
             }
 
-            &:hover{
+         &:hover{
                 background-color: grey;
                 color: white;
             }
@@ -119,10 +121,22 @@ export default {
 
     .error {
         background-color: rgb(255, 168, 168);
-        border: 2px solid rgb(114, 0, 0);
+        border: 2px solid rgb(173, 0, 0);
         color: rgb(255, 0, 0);
         padding: 5px 15px;
         border-radius: 10px;
         margin-bottom: 20px;
     }
+
+  @keyframes mainIn {
+    0%{
+      transform: translateX(-20px);
+      opacity: 0;
+    }
+
+    100%{
+      transform: translateX(0px);
+      opacity: 1;
+    }
+  }
 </style>

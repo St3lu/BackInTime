@@ -21,10 +21,11 @@ module.exports = {
 
             if(existantEmail){
                 return res.status(400).send({error: "Email is already in use"})
-            }else{
-                user = await user.save()
-                res.send(user)
             }
+                
+            user = await user.save()
+            res.send(user)
+            
         }catch(err) {
             res.send(
                 {
@@ -33,4 +34,8 @@ module.exports = {
             )
         }
     }
+    // ,
+    // async findByEmail (email) {
+    //     User.findOne(email === email)
+    // }
 }
