@@ -8,5 +8,12 @@ export default {
     } catch (err) {
       return err.response.data.error
     }
+  },
+  async login (credentials) {
+    try {
+      return {token: await Api().post('login', credentials)}
+    } catch (err) {
+      return {error: err.response.data.error}
+    }
   }
 }

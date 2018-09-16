@@ -2,10 +2,15 @@
   <div class="home">
     <div class="menu">
       <router-link to="register" class="registerBtn">Create new account</router-link>
+      <div class="inpCont">
+        <input name="email" type="email"  placeholder="Email" class="input" autocomplete="off">
+        <label for="email" class="label email" >Email</label>
+      </div>
 
-      <input type="email" placeholder="Email" class="input">
-      <input type="password" placeholder="Password" class="input">
-
+       <div class="inpCont">
+        <input type="password" placeholder="Password"  class="input">
+        <label for="password" class="label password">Password</label>
+       </div>
       <router-link to="login" class="registerBtn log-in">Log In</router-link>
     </div>
     <header class="header">
@@ -89,21 +94,23 @@ export default {
     border-radius: 5px;
     border: none;
     padding: 3px 20px;
-    color: #eee;
+    align-self: center;
+
+    // color: #eee;
 
     &:first-of-type{
       margin-right: 50px;
-      margin-left: auto;
+
+    }
+
+    &::-webkit-input-placeholder{
+      color: grey;
     }
 
     &:focus {
       outline: none;
     }
 
-    &::-webkit-input-placeholder {
-      font-size: 15px;
-
-    }
   }
   .log-in{
     margin-right: 20px;
@@ -137,6 +144,7 @@ export default {
       position: absolute;
       left: 10%;
       top: 100px;
+      transition: all .2s;
 
      &:hover{
       box-shadow: 0 5px 10px rgba(#000, .2);
@@ -153,6 +161,7 @@ export default {
       position: absolute;
       left: 10%;
       top: 190px;
+      transition: all .2s;
 
     &:hover{
       box-shadow: 0 5px 10px rgba(#000, .2);
@@ -193,6 +202,33 @@ export default {
       transform: translateY(0px);
       opacity: 1;
     }
+  }
+
+  .inpCont {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+
+     &:first-of-type{
+       margin-left: auto;
+     }
+  }
+
+  .label{
+    color: #eee;
+    margin-right: 20px;
+    transition: all 1s;
+
+     &:first-of-type{
+      margin-left: auto;
+    }
+  }
+
+  .input:placeholder-shown ~ label {
+    transform: translateX(60px);
+    color: transparent;
   }
 
 </style>

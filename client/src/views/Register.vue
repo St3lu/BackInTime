@@ -1,5 +1,8 @@
 <template>
     <div class="register">
+        <div class="left">
+            <router-link to="/" class="home">&larr; Go back home</router-link>
+        </div>
         <h1 class="heading-1"> Registration</h1>
         <form class="register__form">
             <div class="register__container">
@@ -15,11 +18,17 @@
                 <label for="password">Password</label>
             </div>
             <div class="register__container">
-                <input type="date" name="birth_date" class="register__input" placeholder="Birth Date" v-model="credentials.birth_date">
+                <input type="date" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))" name="birth_date" class="register__input" placeholder="Birth Date" v-model="credentials.birth_date">
                 <label for="birth_date">Date Of Birth</label>
             </div>
             <div v-if="error" class="error" v-html="error"/>
+            <div class="succes" v-if="succes">Registration Complete!</div>
             <a  class="register__btn" @click="sendCredentials">Register</a>
+            <div style="marginTop: 30px;">
+                <router-link to="login" style="textDecoration:none; color:black; fontSize: 16px;">Already have an account?</router-link>
+
+            </div>
+
         </form>
     </div>
 </template>
@@ -27,6 +36,8 @@
 import authenticationService from '../services/authenticationService'
 
 export default {
+
+  // aici
   data () {
     return {
       credentials: {
@@ -35,18 +46,23 @@ export default {
         full_name: '',
         birth_date: ''
       },
-      error: null
+      error: null,
+      succes: false
     }
   },
   methods: {
     async sendCredentials () {
       try {
         this.error = await authenticationService.register(this.credentials)
-        this.credentials.email = ''
-        this.credentials.password = ''
-        this.credentials.full_name = ''
-        this.credentials.birth_date = ''
-        this.error = null
+       
+        if (!this.error) {
+          this.credentials.email = ''
+          this.credentials.password = ''
+          this.credentials.full_name = ''
+          this.credentials.birth_date = ''
+          this.error = null
+          this.succes = true
+        }
       } catch (error) {
         console.log(error)
       }
@@ -55,6 +71,11 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+
+    .left{
+        text-align: left;
+        margin-left: 30px;
+    }
 
     .register {
         font-family: 'Cairo', sans-serif;
@@ -119,13 +140,22 @@ export default {
         font-size: 60px;
     }
 
-    .error {
-        background-color: rgb(255, 168, 168);
-        border: 2px solid rgb(173, 0, 0);
-        color: rgb(255, 0, 0);
+    
+    .succes {
+        background-color: rgba(119, 255, 115, 0.945);
+        border: 2px solid rgb(3, 78, 0);
+        color: rgb(3, 78, 0);
         padding: 5px 15px;
         border-radius: 10px;
         margin-bottom: 20px;
+    }
+
+    .home{
+        text-decoration: none;
+        color: black;
+        font-size: 20px;
+        font-weight: 600;
+       margin-right: auto;
     }
 
   @keyframes mainIn {
